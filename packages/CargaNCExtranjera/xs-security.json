@@ -1,0 +1,37 @@
+{
+  "xsappname": "enviarnotaext",
+ "tenant-mode": "shared",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Callback",
+      "description": "With this scope set, the callbacks for subscribe, unsubscribe and getDependencies can be called.",
+      "grant-as-authority-to-apps": [
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    },
+    {
+      "name": "$XSAPPNAME.EnviarNotaExtScope",
+      "description": "Scope para aplicación Envio de Factura Extranjera"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "EnviarNotaExtRole",
+      "description": "Rol para acceder a la app Envio de Factura Extranjera",
+      "scope-references": [
+        "$XSAPPNAME.EnviarNotaExtScope",
+        "$XSAPPNAME(application,backend).backendscope"
+      ]
+    }
+  ],
+  "foreign-scope-references": [
+    "$XSAPPNAME(application,backend).backendscope"
+  ],
+  "oauth2-configuration": {
+    "token-validity": 14400,
+    "redirect-uris": [
+      "http*://*.cfapps.*.hana.ondemand.com/**"
+    ]
+  }
+}

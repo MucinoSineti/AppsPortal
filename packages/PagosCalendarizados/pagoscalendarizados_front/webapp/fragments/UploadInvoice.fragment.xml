@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:unified="sap.ui.unified">
+	<Dialog id="idDialog" title="{i18n>iupload.title}" horizontalScrolling="true">
+		<UploadCollection id="UploadCollection" maximumFilenameLength="255" maximumFileSize="2" instantUpload="false" change="onFChange"
+			fileDeleted="onFileDeleted" filenameLengthExceed="onFilenameLengthExceed" fileSizeExceed="onFileSizeExceed" typeMissmatch="onTypeMissmatch"
+			beforeUploadStarts="onBeforeUploadStarts" noDataText="2 Mb" mode="MultiSelect" noDataDescription=" {i18n>iupload.desc}" multiple="true"
+			uploadComplete="onUploadComplete" uploadButtonInvisible="true"/>
+		<Table noDataText="{i18n>iupload.noData}" id="factList" alternateRowColors="true" backgroundDesign="Solid" fixedLayout="false"
+			visible="false">
+			<items>
+				<ColumnListItem type="Inactive">
+					<cells>
+						<Text text="{deliverTable>/socdesc}" renderWhitespace="true" maxLines="1"/>
+						<Text text="{deliverTable>/name}" renderWhitespace="true" maxLines="1"/>
+						<ObjectNumber xmlns="sap.m"
+							number="{path: 'deliverTable>/subtotal', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 2}}"
+							unit="{deliverTable>/moneda}"/>
+						<ObjectNumber xmlns="sap.m"
+							number="{path: 'deliverTable>/impuestosret', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 2}}"
+							unit="{deliverTable>/moneda}"/>
+						<ObjectNumber xmlns="sap.m"
+							number="{path: 'deliverTable>/impuestostras', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 2}}"
+							unit="{deliverTable>/moneda}"/>
+						<ObjectNumber xmlns="sap.m" number="{path: 'deliverTable>/total', type: 'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 2}}"
+							unit="{deliverTable>/moneda}"/>
+						<Toolbar>
+							<content>
+								<Button xmlns:core="sap.ui.core" xmlns:unified="sap.ui.unified" xmlns="sap.m" icon="sap-icon://pdf-attachment" 
+									press="pdfView" tooltip="{i18n>iupload.pdf}" binding="{deliverTable>/pdf}"/>
+								<Button xmlns:core="sap.ui.core" xmlns:unified="sap.ui.unified" xmlns="sap.m" icon="sap-icon://upload" 
+									tooltip="{i18n>iupload.upload}" press="sendFact" binding="{deliverTable>/xml}"/>
+								<Button xmlns:core="sap.ui.core" xmlns:unified="sap.ui.unified" xmlns="sap.m" icon="sap-icon://delete"  press="delFact"
+									tooltip="{i18n>iupload.delete}"/>
+							</content>
+						</Toolbar>
+					</cells>
+				</ColumnListItem>
+			</items>
+			<columns>
+				<Column>
+					<header>
+						<Label text="{i18n>iupload.client} "/>
+					</header>
+				</Column>
+				<Column>
+					<header>
+						<Label text="{i18n>iupload.invoice} "/>
+					</header>
+				</Column>
+				<Column>
+					<header>
+						<Label text="{i18n>iupload.subtotal} " id="label4"/>
+					</header>
+				</Column>
+				<Column>
+					<header>
+						<Label text="{i18n>iupload.taxret} "/>
+					</header>
+				</Column>
+				<Column>
+					<header>
+						<Label text="{i18n>iupload.tax} "/>
+					</header>
+				</Column>
+				<Column>
+					<header>
+						<Label text="{i18n>iupload.total} "/>
+					</header>
+				</Column>
+				<Column>
+					<header>
+						<Text id="text1"/>
+					</header>
+				</Column>
+			</columns>
+		</Table>
+		<buttons>
+			<Button id="btnDelete" text="{i18n>iupload.delete}" type="Reject" press="delFact" icon="sap-icon://delete" visible="true"/>
+			<Button id="btnAccept" text="{i18n>iupload.dialogAccept}" press="onAcceptProcess" type="Accept" visible="true"/>
+			<Button id="closeDialog" text="{i18n>iupload.dialogCloseButtonText}" press="onCloseDialogUpload" type="Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

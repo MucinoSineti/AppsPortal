@@ -1,0 +1,41 @@
+{
+  "xsappname": "pagoscalendarizados",
+  "tenant-mode": "shared",
+  "description": "Security profile of Pagos Calendarizados application",
+
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Callback",
+      "description": "Permite realizar las llamadas de suscripción, desuscripción y dependencias del SaaS.",
+      "grant-as-authority-to-apps": [
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    },
+    {
+      "name": "$XSAPPNAME.PagosCalendarizadosScope",
+      "description": "Scope principal para la aplicación Pagos Calendarizados"
+    }
+  ],
+
+  "role-templates": [
+    {
+      "name": "PagosCalendarizadosRole",
+      "description": "Rol con permisos para acceder a la aplicación Pagos Calendarizados",
+      "scope-references": [
+        "$XSAPPNAME.PagosCalendarizadosScope",
+        "$XSAPPNAME(application,backend).backendscope"
+      ]
+    }
+  ],
+
+  "foreign-scope-references": [
+    "$XSAPPNAME(application,backend).backendscope"
+  ],
+
+  "oauth2-configuration": {
+    "token-validity": 14400,
+    "redirect-uris": [
+      "http*://*.cfapps.*.hana.ondemand.com/**"
+    ]
+  }
+}
