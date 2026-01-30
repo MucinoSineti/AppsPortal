@@ -1,0 +1,195 @@
+<mvc:View
+    controllerName="enviarfacturasfront.controller.main"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.ui.unified"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+>
+    <Page
+        showHeader="true"
+        title="{i18n>facturas.title}"
+        showFooter="false"
+        showNavButton="false"
+        navButtonPress="onNavBack"
+        class="sapUiContentPadding"
+    >
+        <headerContent>
+            <FlexBox
+                width="100%"
+                alignItems="Start"
+                justifyContent="SpaceBetween"
+                id="__box0"
+            >
+                <items>
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Label text="{i18n>facturas.de}" />
+                        <DatePicker
+                            id="startDatePicker"
+                            width="auto"
+                            change="onChangeDate"
+                        />
+                        <Label text="{i18n>facturas.hasta}" />
+                        <DatePicker
+                            id="endDatePicker"
+                            width="auto"
+                            change="onChangeDate"
+                        />
+                    </Toolbar>
+                </items>
+            </FlexBox>
+        </headerContent>
+
+        <content>
+            <ScrollContainer
+                horizontal="true"
+                vertical="false"
+                height="auto"
+            >
+                <VBox>
+                    <ScrollContainer
+                        horizontal="true"
+                        vertical="false"
+                        height="100%"
+                    >
+                        <Table
+                            id="docMatList"
+                            items="{path: 'documents>/results'}"
+                            mode="MultiSelect"
+                            growing="true"
+                        >
+                            <headerToolbar>
+                                <Toolbar>
+                                    <content>
+                                        <Title text="{i18n>facturas.entradas}" />
+                                        <ToolbarSpacer />
+                                        <SearchField
+                                            id="searchField"
+                                            placeholder="{i18n>facturas.buscar}"
+                                            search="filtrado"
+                                            width="200px"
+                                        />
+            
+                                        <Select id="selectFilter">
+                                            <items>
+                                                <core:Item
+                                                    key="MaterialDocument"
+                                                    text="{i18n>facturas.numEntrega}"
+                                                />
+                                                <core:Item
+                                                    key="PurchaseOrder"
+                                                    text="{i18n>facturas.ordenCompra}"
+                                                />
+                                                <core:Item
+                                                    key="Client"
+                                                    text="{i18n>facturas.cliente}"
+                                                />
+                                                <core:Item
+                                                    key="ReferenceDocument"
+                                                    text="{i18n>facturas.referencia}"
+                                                />
+                                                <core:Item
+                                                    key="SupplierName"
+                                                    text="{i18n>facturas.nombreProveedor}"
+                                                />
+                                            </items>
+                                        </Select>
+                                        <Button
+                                            text="{i18n>facturas.cargarFactura}"
+                                            icon="sap-icon://upload"
+                                            press="uploadButton"
+                                        />
+                                        <Button
+                                            text="{i18n>facturas.enviarAclaracion}"
+                                            icon="sap-icon://discussion"
+                                            press="aclaracionButton"
+                                        />
+                                    </content>
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column>
+                                    <Text text="Número de Entrega" />
+                                </Column>
+                                <Column>
+                                    <Text text="Orden Compra" />
+                                </Column>
+                                <Column>
+                                    <Text text="Posición del Pedido" />
+                                </Column>
+                                <Column>
+                                    <Text text="Posición del Material" />
+                                </Column>
+                                <Column>
+                                    <Text text="Nombre del Proveedor" />
+                                </Column>
+                                <Column>
+                                    <Text text="Cliente" />
+                                </Column>
+                                <Column>
+                                    <Text text="Referencia" />
+                                </Column>
+                                <Column>
+                                    <Text text="Clase de Condición" />
+                                </Column>
+                                <Column>
+                                    <Text text="Fecha Documento" />
+                                </Column>
+                                <Column>
+                                    <Text text="Importe" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <!-- Número de Entrega -->
+                                        <Text
+                                            text="{documents>MaterialDocument}"
+                                        />
+                                        <!-- Orden Compra -->
+                                        <Text
+                                            text="{documents>PurchaseOrder}"
+                                        />
+                                        <!-- Posición del Pedido -->
+                                        <Text
+                                            text="{documents>PurchaseOrderItem}"
+                                        />
+                                        <!-- Posición del Material -->
+                                        <Text
+                                            text="{documents>MaterialDocumentItem}"
+                                        />
+                                        <!-- Proveedor -->
+                                        <Text text="{documents>SupplierName}" />
+                                        <!-- Sociedad -->
+                                        <Text text="{documents>Client}" />
+                                        <!-- Referencia -->
+                                        <Text
+                                            text="{documents>ReferenceDocument}"
+                                        />
+                                        <!-- Clase de Condición -->
+                                        <Text
+                                            text="{documents>Condition}"
+                                        />
+                                        <!-- Fecha -->
+                                        <Text
+                                            text="{path: 'documents>DocumentDate', type:'sap.ui.model.type.Date', formatOptions:{style:'medium'}}"
+                                        />
+                                        <!-- Importe -->
+                                        <ObjectNumber
+                                            number="{documents>EffectiveAmount}"
+                                            unit="{documents>DocumentCurrency}"
+                                        />                               
+                                        
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </ScrollContainer>
+                </VBox>
+            </ScrollContainer>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,153 @@
+<mvc:View
+    controllerName="enviarnotafront.controller.main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        showHeader="true"
+        title="{i18n>nota.titulo}"
+        showNavButton="false"
+        navButtonPress="onNavBack"
+        backgroundDesign="Transparent"
+    >
+        <!-- Barra superior con fechas -->
+        <headerContent>
+            <FlexBox
+                width="100%"
+                alignItems="Start"
+                justifyContent="SpaceBetween"
+            >
+                <items>
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Label text="{i18n>nota.de}" />
+                        <DatePicker
+                            id="startDatePicker"
+                            change=".onChangeDate"
+                        />
+                        <Label text="{i18n>nota.hasta}" />
+                        <DatePicker
+                            id="endDatePicker"
+                            change=".onChangeDate"
+                        />
+                    </Toolbar>
+                </items>
+            </FlexBox>
+        </headerContent>
+
+        <content>
+            <VBox>
+                <Toolbar>
+                    <content>
+                        <Title text="{i18n>nota.header}" />
+                        <ToolbarSpacer />
+                        <SearchField
+                            id="searchField"
+                            placeholder="{i18n>nota.buscar}"
+                            liveChange="filtrado"
+                            width="200px"
+                        />
+                        <Select id="selectFilter">
+                            <items>
+                                <core:Item
+                                    key="MaterialDocument"
+                                    text="{i18n>nota.numEntrega}"
+                                />
+                                <core:Item
+                                    key="PurchaseOrder"
+                                    text="{i18n>nota.ordenCompra}"
+                                />
+                                <core:Item
+                                    key="PurchaseOrderItem"
+                                    text="{i18n>nota.posicion}"
+                                />
+                                <core:Item
+                                    key="SupplierName"
+                                    text="{i18n>nota.nombreProveedor}"
+                                />
+                                <core:Item
+                                    key="CompanyCodeName"
+                                    text="{i18n>nota.cliente}"
+                                />
+                                <core:Item
+                                    key="ReferenceDocument"
+                                    text="{i18n>nota.referencia}"
+                                />
+                            </items>
+                        </Select>
+                        <Button
+                            text="{i18n>nota.botonCargar}"
+                            icon="sap-icon://upload"
+                            type="Emphasized"
+                            press="uploadButton"
+                        />
+                        <Button
+                            text="{i18n>nota.botonAclaracion}"
+                            icon="sap-icon://discussion"
+                            type="Emphasized"
+                            press="aclaracionButton"
+                        />
+                    </content>
+                </Toolbar>
+
+                <!-- Tabla -->
+                <Table
+                    id="docMatList"
+                    noDataText="{i18n>nota.noDataText}"
+                    mode="MultiSelect"
+                    alternateRowColors="true"
+                    items="{documents>/results}"
+                    selectionChange="validateSociety"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="{i18n>nota.numEntrega}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.ordenCompra}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.posicion}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.nombreProveedor}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.cliente}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.referencia}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.fechaEntrega}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>nota.importe}" />
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{documents>MaterialDocument}" />
+                                <Text text="{documents>PurchaseOrder}" />
+                                <Text text="{documents>PurchaseOrderItem}" />
+                                <Text text="{documents>SupplierName}" />
+                                <Text text="{documents>CompanyCodeName}" />
+                                <Text text="{documents>ReferenceDocument}" />
+                                <Text
+                                    text="{path: 'documents>DocumentDate', formatter: '.formatDate'}"
+                                />
+                                <ObjectNumber
+                                    number="{documents>EffectiveAmount}"
+                                    numberUnit="{documents>Currency}"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
